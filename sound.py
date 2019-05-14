@@ -1,9 +1,13 @@
 from numpy.fft import *
 from numpy import log10, sqrt, array, zeros, ones, multiply
+import numpy as np
+
 import math
 import wave
 import struct
 import matplotlib.pyplot as plt
+from scipy.io.wavfile import write
+
 
 
 def get_samples(file):
@@ -30,10 +34,16 @@ def get_samples(file):
 
 
 
-# Example manipulations
+# Generates array of samples reading audio file
 samples = get_samples('maybe-next-time.wav')
 plt.plot(samples)
 plt.show()
+
+# Transform array of data into playable audio
+scaled = np.int16(samples/np.max(np.abs(samples)) * 32767)
+write('test.wav', 44100, scaled)
+
+
 # # Compute the FFT of the samples (gets the frequencies used)
 # freq_domain = fft(samples)
 # plt.plot(freq_domain)
