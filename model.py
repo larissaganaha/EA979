@@ -58,7 +58,7 @@ rgb[0] = 0
 print("\nRGB[0] Modified Array")
 print(rgb[0])
 
-rgb[:, 1] = 0
+# rgb[:, 1] = 0
 print("\nRGB[:,1] Modified Array")
 print(rgb)
 print(type(rgb))
@@ -68,9 +68,28 @@ print(type(rgb))
 # for x in range(0, size):
 #     rgb[:,[2]][x] = 255;
 
+
+# Setup viewer
 v = pptk.viewer(xyz)
-v.set(point_size=0.005)
+v.set(point_size = 0.005)
 v.attributes(rgb / 255., 0.5 * (1 + n))
+v.set(bg_color = [0, 0, 0, 1])
+v.set(floor_color = [0, 0, 0, 1])
+v.set(show_grid = False)
+v.set(show_axis = False)
+
+# Rotates camera
+poses = []
+poses.append([0, 0, 0, 0 * np.pi/2, np.pi/4, 5])
+poses.append([0, 0, 0, 1 * np.pi/2, np.pi/4, 5])
+poses.append([0, 0, 0, 2 * np.pi/2, np.pi/4, 5])
+poses.append([0, 0, 0, 3 * np.pi/2, np.pi/4, 5])
+poses.append([0, 0, 0, 4 * np.pi/2, np.pi/4, 5])
+v.play(poses, 2 * np.arange(5), repeat=True, interp='linear')
+
+
+print(type(v))
+
 #
 
 # for x in extractedData
