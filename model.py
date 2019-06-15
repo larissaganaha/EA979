@@ -2,7 +2,7 @@ import pptk
 import numpy as np
 import plyfile
 
-data = plyfile.PlyData.read('germany.ply')['vertex']
+data = plyfile.PlyData.read('g.ply')['vertex']
 
 xyz = np.c_[data['x'], data['y'], data['z']]          # Eixos
 rgb = np.c_[data['red'], data['green'], data['blue']] # RGB
@@ -71,22 +71,30 @@ print(type(rgb))
 
 # Setup viewer
 v = pptk.viewer(xyz)
-v.set(point_size = 0.005)
+v.set(point_size = 0.007)
 v.attributes(rgb / 255., 0.5 * (1 + n))
 v.set(bg_color = [0, 0, 0, 1])
 v.set(floor_color = [0, 0, 0, 1])
 v.set(show_grid = False)
 v.set(show_axis = False)
+v.set(lookat = [-0.5, 5.50, -8])
+v.set(theta = 0.6)
+v.set(phi = 6)
+v.set(r = 20)
 
+v.get('view')
+
+#  (x, y, z, phi, theta, r)
 # Rotates camera
 poses = []
-poses.append([0, 0, 0, 0 * np.pi/2, np.pi/4, 5])
-poses.append([0, 0, 0, 1 * np.pi/2, np.pi/4, 5])
-poses.append([0, 0, 0, 2 * np.pi/2, np.pi/4, 5])
-poses.append([0, 0, 0, 3 * np.pi/2, np.pi/4, 5])
-poses.append([0, 0, 0, 4 * np.pi/2, np.pi/4, 5])
-v.play(poses, 2 * np.arange(5), repeat=True, interp='linear')
-
+poses.append([-10, 5, 0, 6 , 0.6, 5])
+poses.append([-5, 5, 0, 6, 0.6, 5])
+poses.append([0, 5, 0, 6, 0.6, 5])
+poses.append([5, 5, 0, 6, 0.6, 5])
+poses.append([10, 5, 0, 6, 0.6, 5])
+poses.append([12, 5, 0, 6, 0.6, 5])
+# play(poses, ts=[], tlim=[-inf, inf], repeat=False, interp='cubic_natural')
+v.play(poses, 2 * np.arange(len(poses)), repeat=True, interp='linear')
 
 print(type(v))
 
